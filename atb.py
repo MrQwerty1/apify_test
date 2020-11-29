@@ -9,7 +9,6 @@ async def get_data(source):
     title = ''.join(tree.xpath("//div[@class='page-title']/h2/text()")).strip()
 
 
-
 async def get_url(source):
     tree = html.fromstring(source)
     links = tree.xpath("//div[@class='product-detail text-center']/a/@href")
