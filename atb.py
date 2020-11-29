@@ -1,5 +1,6 @@
 import asyncio
 import aiohttp
+import csv
 import time
 from lxml import html
 
@@ -7,6 +8,8 @@ from lxml import html
 async def get_data(source):
     tree = html.fromstring(source)
     title = ''.join(tree.xpath("//div[@class='page-title']/h2/text()")).strip()
+    price = ''.join(tree.xpath("//span[@class='price']//text()")).strip()
+    wr.writerow([title, price])
 
 
 async def get_url(source):
@@ -50,5 +53,9 @@ async def run():
 
 
 if __name__ == '__main__':
+    w = open('data.csv', 'w', encoding='utf8')
+    wr = csv.writer(w, delimiter=',')
+    wr.writerow(['Name', 'Price'])
     start = time.time()
     asyncio.run(run())
+    w.close()
